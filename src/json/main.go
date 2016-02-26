@@ -6,41 +6,41 @@ import (
 	"io/ioutil"
 )
 
-type class struct {
-	class     string `json:"class"`
-	agility   int    `json:"agility"`
-	sheild    int    `json:"shield"`
-	health    int    `json:"health"`
-	name1     string `json:"name1"`
-	damage1   int    `json:"damage1"`
-	accuracy1 int    `json:"accuracy1"`
-	speed1    int    `json:"speed1"`
-	name2     string `json:"name2"`
-	damage2   int    `json:"damage2"`
-	accuracy2 int    `json:"accuracy2"`
-	speed2    int    `json:speed2"`
+type Race struct {
+	class   string `json:"class"`
+	health  int    `json:"health"`
+	agility int    `json:"agility"`
+	shield  int    `json:"shield"`
+	attacks []Move `json:"attacks"`
+}
+
+type Move struct {
+	name     string `json:"name"`
+	damage   int    `json:"damage"`
+	accuracy int    `json:"accuracy"`
+	speed    int    `json:"speed"`
 }
 
 func main() {
-	// read the file, using the ioutil pacakge  https://golang.org/pkg/io/ioutil/#ReadFile
-	bytes, err := ioutil.ReadFile("file.json")
+	bytes, err := ioutil.ReadFile("class.json")
 	if err != nil {
-		fmt.Println("There was an error reading the file, make sure it is in the same directory as main.go, or you have the correct path stated")
-		fmt.Println(err)
+		fmt.Println("There was an error reading the file")
+		fmt.Println("make sure it is in the same directory as main.go, or you have the correct path stated")
 		panic(err)
 	}
-	fmt.Println(json.class)
-	fmt.Println(json.agility)
-	fmt.Println(json.shield)
-	fmt.Println(json.health)
-	fmt.Println("Attack 1:")
-	fmt.Println(json.name1)
-	fmt.Println(json.damage1)
-	fmt.Println(json.accuracy1)
-	fmt.Println(json.speed1)
-	fmt.Println("Attack 2:")
-	fmt.Println(json.name2)
-	fmt.Println(json.damage2)
-	fmt.Println(json.accuracy2)
-	fmt.Println(json.speed2)
+	jsonClass := &Race{}
+	err = json.Unmarshal(bytes, jsonClass)
+	//decodes it
+	if err != nil {
+		if e, ok := err.(*json.SyntaxError); ok {
+			fmt.Printf("%v: %s <<--ERROR %s\n", e, bytes[:e.Offset], bytes[e.Offset:])
+		} else {
+			fmt.Println("There was an error decoding the file")
+		}
+		panic(err)
+	}
+
+	fmt.Println(jsonClass.class)
+	fmt.Println(jsonClass.attacks[0].name)
+
 }
