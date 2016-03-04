@@ -1,4 +1,4 @@
 #remember, source me don't run me
 
-export GOPATH=$HOME/repos/Battle-Game
-export PATH=$HOME/repos/Battle-Game/bin:$PATH
+export GOPATH=$HOME/repos/battle-game
+export PATH=$HOME/repos/battle-game/bin:$PATH
