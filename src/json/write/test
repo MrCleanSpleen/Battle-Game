@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+import os
+import time as t
+os.system("touch file.json")
+t.sleep(3)
